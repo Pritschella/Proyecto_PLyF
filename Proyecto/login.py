@@ -106,3 +106,13 @@ def exito_login():
     ventana_exito.geometry("150x100")
     Label(ventana_exito, text="Login finalizado con exito").pack()
     Button(ventana_exito, text="OK", command=borrar_exito_login).pack()
+    
+#VENTANA DE "Contraseña incorrecta".
+def no_clave():
+    global ventana_no_clave
+    ventana_no_clave = Toplevel(ventana_login)
+    ventana_no_clave.title("ERROR")
+    ventana_no_clave.geometry("150x100")
+    Label(ventana_no_clave, text="Contrasena incorrecta ").pack()
+    Button(ventana_no_clave, text="OK", command=borrar_no_clave).pack() #EJECUTA "borrar_no_clave()".
+ 
