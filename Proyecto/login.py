@@ -154,4 +154,6 @@ def registro_usuario():
  
     Label(ventana_registro, text="Registro completado con exito", fg="green", font=("calibri", 11)).pack()
  
+ventana_inicio() 
+ 
  
