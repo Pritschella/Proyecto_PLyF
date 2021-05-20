@@ -125,4 +125,16 @@ def no_usuario():
     Label(ventana_no_usuario, text="Usuario no encontrado").pack()
     Button(ventana_no_usuario, text="OK", command=borrar_no_usuario).pack()
     
+#CERRADO DE VENTANAS
+def borrar_exito_login():
+    ventana_exito.destroy()
+ 
+ 
+def borrar_no_clave():
+    ventana_no_clave.destroy()
+ 
+ 
+def borrar_no_usuario():
+    ventana_no_usuario.destroy()
+    
  
