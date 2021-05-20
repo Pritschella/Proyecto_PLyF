@@ -77,4 +77,24 @@ def login():
     Label(ventana_login, text="").pack()
     Button(ventana_login, text="Acceder", width=10, height=1, command = verifica_login).pack()
     
+#VENTANA "VERIFICACION DE LOGIN".
+def verifica_login():
+    usuario1 = verifica_usuario.get()
+    clave1 = verifica_clave.get()
+    entrada_login_usuario.delete(0, END) 
+    entrada_login_clave.delete(0, END) 
+ 
+    lista_archivos = os.listdir() 
+    
+    if usuario1 in lista_archivos:
+        archivo1 = open(usuario1, "r")
+        verifica = archivo1.read().splitlines() 
+        
+        if clave1 in verifica:
+            exito_login() 
+            
+        else:
+            no_clave() 
+    else:
+        no_usuario() 
     
