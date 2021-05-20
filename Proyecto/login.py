@@ -137,4 +137,21 @@ def borrar_no_clave():
 def borrar_no_usuario():
     ventana_no_usuario.destroy()
     
+    
+#REGISTRO USUARIO    
+def registro_usuario():
+ 
+    usuario_info = nombre_usuario.get()
+    clave_info = clave.get()
+ 
+    file = open(usuario_info, "w")
+    file.write(usuario_info + "\n")
+    file.write(clave_info)
+    file.close()
+ 
+    entrada_nombre.delete(0, END)
+    entrada_clave.delete(0, END)
+ 
+    Label(ventana_registro, text="Registro completado con exito", fg="green", font=("calibri", 11)).pack()
+ 
  
