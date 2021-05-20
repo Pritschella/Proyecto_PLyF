@@ -13,12 +13,12 @@ def ventana_inicio():
     pestas_color="DarkGrey"
     ventana_principal=Tk()
     ventana_principal.geometry("300x250")#DIMENSIONES DE LA VENTANA
-    ventana_principal.title("Login con tkinter")#TITULO DE LA VENTANA
-    Label(text="Escoja su opcion", bg="LightGreen", width="300", height="2", font=("Calibri", 13)).pack()#ETIQUETA CON TEXTO
+    ventana_principal.title("Login con tkinter")
+    Label(text="Escoja su opcion", bg="LightGreen", width="300", height="2", font=("Calibri", 13)).pack()
     Label(text="").pack()
-    Button(text="Acceder", height="2", width="30", bg=pestas_color, command=login).pack() #BOTÓN "Acceder"
+    Button(text="Acceder", height="2", width="30", bg=pestas_color, command=login).pack() 
     Label(text="").pack()
-    Button(text="Registrarse", height="2", width="30", bg=pestas_color, command=registro).pack() #BOTÓN "Registrarse".
+    Button(text="Registrarse", height="2", width="30", bg=pestas_color, command=registro).pack() 
     Label(text="").pack()
     ventana_principal.mainloop()
     
@@ -33,21 +33,21 @@ def registro():
     global clave
     global entrada_nombre
     global entrada_clave
-    nombre_usuario = StringVar() #DECLARAMOS "string" COMO TIPO DE DATO PARA "nombre_usuario"
-    clave = StringVar() #DECLARAMOS "sytring" COMO TIPO DE DATO PARA "clave"
+    nombre_usuario = StringVar() 
+    clave = StringVar() 
  
     Label(ventana_registro, text="Introduzca datos", bg="LightGreen").pack()
     Label(ventana_registro, text="").pack()
     etiqueta_nombre = Label(ventana_registro, text="Nombre de usuario * ")
     etiqueta_nombre.pack()
-    entrada_nombre = Entry(ventana_registro, textvariable=nombre_usuario) #ESPACIO PARA INTRODUCIR EL NOMBRE.
+    entrada_nombre = Entry(ventana_registro, textvariable=nombre_usuario) 
     entrada_nombre.pack()
     etiqueta_clave = Label(ventana_registro, text="Contrasena * ")
     etiqueta_clave.pack()
-    entrada_clave = Entry(ventana_registro, textvariable=clave, show='*') #ESPACIO PARA INTRODUCIR LA CONTRASEÑA.
+    entrada_clave = Entry(ventana_registro, textvariable=clave, show='*') 
     entrada_clave.pack()
     Label(ventana_registro, text="").pack()
-    Button(ventana_registro, text="Registrarse", width=10, height=1, bg="LightGreen", command = registro_usuario).pack() #BOTÓN "Registrarse"
+    Button(ventana_registro, text="Registrarse", width=10, height=1, bg="LightGreen", command = registro_usuario).pack()
     
 #VENTANA PARA LOGIN.
 def login():
@@ -107,12 +107,22 @@ def exito_login():
     Label(ventana_exito, text="Login finalizado con exito").pack()
     Button(ventana_exito, text="OK", command=borrar_exito_login).pack()
     
-#VENTANA DE "Contraseña incorrecta".
+#VENTANA DE "Contrasena incorrecta".
 def no_clave():
     global ventana_no_clave
     ventana_no_clave = Toplevel(ventana_login)
     ventana_no_clave.title("ERROR")
     ventana_no_clave.geometry("150x100")
     Label(ventana_no_clave, text="Contrasena incorrecta ").pack()
-    Button(ventana_no_clave, text="OK", command=borrar_no_clave).pack() #EJECUTA "borrar_no_clave()".
+    Button(ventana_no_clave, text="OK", command=borrar_no_clave).pack()
+    
+#VENTANA DE "Usuario no encontrado". 
+def no_usuario():
+    global ventana_no_usuario
+    ventana_no_usuario = Toplevel(ventana_login)
+    ventana_no_usuario.title("ERROR")
+    ventana_no_usuario.geometry("150x100")
+    Label(ventana_no_usuario, text="Usuario no encontrado").pack()
+    Button(ventana_no_usuario, text="OK", command=borrar_no_usuario).pack()
+    
  
