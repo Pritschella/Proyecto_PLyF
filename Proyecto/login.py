@@ -49,5 +49,32 @@ def registro():
     Label(ventana_registro, text="").pack()
     Button(ventana_registro, text="Registrarse", width=10, height=1, bg="LightGreen", command = registro_usuario).pack() #BOTÓN "Registrarse"
     
+#VENTANA PARA LOGIN.
+def login():
+    global ventana_login
+    ventana_login = Toplevel(ventana_principal)
+    ventana_login.title("Acceso a la cuenta")
+    ventana_login.geometry("300x250")
+    Label(ventana_login, text="Introduzca nombre de usuario y contrasena").pack()
+    Label(ventana_login, text="").pack()
+ 
+    global verifica_usuario
+    global verifica_clave
+ 
+    verifica_usuario = StringVar()
+    verifica_clave = StringVar()
+ 
+    global entrada_login_usuario
+    global entrada_login_clave
+ 
+    Label(ventana_login, text="Nombre usuario * ").pack()
+    entrada_login_usuario = Entry(ventana_login, textvariable=verifica_usuario)
+    entrada_login_usuario.pack()
+    Label(ventana_login, text="").pack()
+    Label(ventana_login, text="Contrasena * ").pack()
+    entrada_login_clave = Entry(ventana_login, textvariable=verifica_clave, show= '*')
+    entrada_login_clave.pack()
+    Label(ventana_login, text="").pack()
+    Button(ventana_login, text="Acceder", width=10, height=1, command = verifica_login).pack()
     
     
