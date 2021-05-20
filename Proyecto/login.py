@@ -98,3 +98,11 @@ def verifica_login():
     else:
         no_usuario() 
     
+# VENTANA "Login finalizado con exito".
+def exito_login():
+    global ventana_exito
+    ventana_exito = Toplevel(ventana_login)
+    ventana_exito.title("Exito")
+    ventana_exito.geometry("150x100")
+    Label(ventana_exito, text="Login finalizado con exito").pack()
+    Button(ventana_exito, text="OK", command=borrar_exito_login).pack()
