@@ -14,7 +14,7 @@ def ventana_inicio():
     ventana_principal=Tk()
     ventana_principal.geometry("300x250")#DIMENSIONES DE LA VENTANA
     ventana_principal.title("Login con tkinter")
-    Label(text="Escoja su opcion", bg="LightGreen", width="300", height="2", font=("Calibri", 13)).pack()
+    Label(text="Selecciona una opcion", bg="LightGreen", width="300", height="2", font=("Calibri", 13)).pack()
     Label(text="").pack()
     Button(text="Acceder", height="2", width="30", bg=pestas_color, command=login).pack() 
     Label(text="").pack()
