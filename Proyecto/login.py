@@ -43,7 +43,7 @@ strCon=tk.StringVar()
 def obtenerDatos():
     strUs.set(usCaja.get())
     strCon.set(conCaja.get())
-    
+
     if not strUs.get() or not strCon.get():
         MB.showerror("Error", "Llena los campos")
     elif not strUs.get().isalpha():
@@ -53,10 +53,11 @@ def obtenerDatos():
             abrirVentana()
         else:
             MB.showerror("Error", "Usuario o Contrasena Incorrectos")
-        
+
 def abrirVentana():
     login.destroy()
 
 #--------------------------
 login.mainloop()
+ 
  
