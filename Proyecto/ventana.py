@@ -78,13 +78,16 @@ btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnLimpiar.place(x=400, y=195)
 
 #Listbox
-lb = ttk.Treeview(ventana, columns=("numEmpleado","fNacimiento", "name"), show='headings')
+lb = ttk.Treeview(ventana, columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')
 lb.heading("numEmpleado", text="Numero de empleado")
 lb.heading("fNacimiento", text="Fecha de nacimiento")
 lb.heading("name", text="Nombre")
+lb.heading("last_name",text="Apellidos")
+lb.heading("gender",text="Genero")
+lb.heading("hire_date",text="Contratacion")
 items = con.DataBase().select_all()
 for j in items:
-    lb.insert('', tk.END, values =(j[0], j[1], j[2]))
+    lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
 
 lb.place(x=10, y=280, width = 600, height=150)
 
@@ -120,17 +123,42 @@ def obtenerDatos():
     elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
         MB.showerror("Error", "Numero de empleado y salario deben llevar solo NUMEROS")
     else:
+        realizarAlta(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get())
         MB.showinfo("Exito", "Alta/Cambio Realizado")
+        actualizarT()
     
+def actualizarT():
+    lb = ttk.Treeview(ventana,columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')
+    lb.heading("numEmpleado", text="Numero de empleado")
+    lb.column("numEmpleado", width=45)
+    lb.heading("fNacimiento", text="Fecha de nacimiento")
+    lb.column("fNacimiento", width=45)
+    lb.heading("name", text="Nombre")
+    lb.column("name", width=45)
+    lb.heading("last_name",text="Apellidos")
+    lb.column("last_name", width=45)
+    lb.heading("gender",text="Genero")
+    lb.column("gender", width=45)
+    lb.heading("hire_date",text="Contratacion")
+    lb.column("hire_date", width=45)
+    items = con.DataBase().select_all()
+    
+    for j in items:
+        lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
 
-        
+    lb.place(x=10, y=280, width = 600, height=150)
+    return lb
+lb = actualizarT()
+
 def obtenerNumEmpleado():
     strNumEmpleado.set(numEmpleadoCaja.get())
     if strNumEmpleado.get():
+        con.DataBase().baja(strNumEmpleado.get())
+        actualizarT()
         MB.showinfo("Exito", "Baja Realizada")
     else:
         MB.showerror("Error", "Introduce un Numero de Empleado")
-
+    
     
 def imprimir():
     print(strNumEmpleado.get()+strGenero.get())
@@ -145,5 +173,7 @@ def limpiar():
     salarioCaja.delete(0, tk.END)
     nomDepartamentoCaja.set("")  
 
+def realizarAlta(EN,BD, FN, LN,G,HD):
+    con.DataBase().alta(EN, BD, FN, LN, G, HD)
 #----------------
 ventana.mainloop()

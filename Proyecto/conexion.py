@@ -37,3 +37,20 @@ class DataBase:
         except Exception as e:
             raise e
         return empleado
+    def alta(self, EN, BD, FN, LN, G, HD):
+        sql = "Insert into employees (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES ('{}','{}','{}','{}','{}','{}')".format(EN, BD, FN, LN, G, HD)
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as e:
+            raise e
+        
+    def baja(self, numEmpleado):
+        sql = "Delete from employees where emp_no = {}".format(numEmpleado)
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as e:
+            raise e
+
+database=DataBase()
