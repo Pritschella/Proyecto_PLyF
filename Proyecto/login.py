@@ -16,7 +16,7 @@ login.configure(bg="SkyBlue")
 #Titulo
 titulo = tk.Label(login, text="SISTEMA DE EMPLEADOS", bg="SkyBlue", font=("Helvetica", 16))
 titulo.pack(fill=tk.X)
-etiqueta=tk.Label(login, text="Llena los siguientes campos", bg = "SkyBlue")
+etiqueta=tk.Label(login, text="Llena los siguientes campos...", bg = "SkyBlue", font=("Arial", 12))
 etiqueta.pack()
 
 #etiquetas
@@ -56,6 +56,7 @@ def obtenerDatos():
 
 def abrirVentana():
     login.destroy()
+    import ventana
 
 #--------------------------
 login.mainloop()
