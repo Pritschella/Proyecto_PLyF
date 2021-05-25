@@ -7,6 +7,8 @@ Created on 24 may. 2021
 import tkinter as tk
 from tkinter import messagebox as MB
 from tkinter import ttk
+from tkinter import PhotoImage
+import conexion as con
 
 
 #Creacion ventana y Configuracion
@@ -72,7 +74,24 @@ btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: 
 btnCambio.place(x=400, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=400, y=165)
+btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
+btnLimpiar.place(x=400, y=195)
 
+#Listbox
+lb = ttk.Treeview(ventana, columns=("numEmpleado","fNacimiento", "name"), show='headings')
+lb.heading("numEmpleado", text="Numero de empleado")
+lb.heading("fNacimiento", text="Fecha de nacimiento")
+lb.heading("name", text="Nombre")
+items = con.DataBase().select_all()
+for j in items:
+    lb.insert('', tk.END, values =(j[0], j[1]))
+
+lb.place(x=10, y=280, width = 600, height=150)
+
+def sacar():
+    seleccionado = lb.curselection()[0]
+    print(lb.item(seleccionado, option="text"))
+    
 
 #Variables
 strNumEmpleado = tk.StringVar()

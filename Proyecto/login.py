@@ -6,11 +6,12 @@ Created on 20 may. 2021
 
 import tkinter as tk
 from tkinter import messagebox as MB
+from tkinter import PhotoImage
 
 #Creacion login y configuracion
 login = tk.Tk()
 login.title("Login")
-login.geometry("3000x300")
+login.geometry("300x300")
 login.configure(bg="SkyBlue")
 
 #Titulo
@@ -32,8 +33,10 @@ conCaja = tk.Entry(login, show="*")
 conCaja.place(x=100, y =180)
 
 #boton
-btnIniciar=tk.Button(login, text="        Iniciar        ", height=2,  command=lambda: obtenerDatos())
-btnIniciar.place(x=110, y=250)
+img = PhotoImage(file="login.png")
+btnIniciar = tk.Button(login, image=img, text="Iniciar", width=60, command=lambda: obtenerDatos())
+btnIniciar.place(x=130, y=250)
+
 
 #vars
 strUs=tk.StringVar()

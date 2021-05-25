@@ -6,13 +6,34 @@ Created on 22 may. 2021
 
 import pymysql
 
-try:
-    conexion = pymysql.connect(host='localhost',
-                               user='root',
-                               password='berenice',
-                               db='employees')
+class DataBase:
+    def __init__(self):
+        self.connection = pymysql.connect(
+            host="localhost",
+            user = "root",
+            password="berenice",
+            db="employees")
+        
+        self.cursor = self.connection.cursor()
+        
+        print("Conexion exitosa")
+        
+    def select_one(self, numEmpleado):
+        sql = "SELECT emp_no, birth_date FROM employees WHERE emp_no = '{}'".format(numEmpleado)
+        try:
+            self.cursor.execute(sql)
+            empleado = self.cursor.fetchone()
+            
+        except Exception as e:
+            raise e
+        return empleado
     
-    print("Conexion correcta")
-
-except(pymysql.err.OperationalError, pymysql.err.InternalError) as e:
-    print("Ocurrio un error al conectar: ", e)
+    def select_all(self):
+        sql = 'SELECT * FROM employees'
+        try:
+            self.cursor.execute(sql)
+            empleado = self.cursor.fetchall()
+            
+        except Exception as e:
+            raise e
+        return empleado
