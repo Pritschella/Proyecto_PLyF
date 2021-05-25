@@ -84,7 +84,7 @@ lb.heading("fNacimiento", text="Fecha de nacimiento")
 lb.heading("name", text="Nombre")
 items = con.DataBase().select_all()
 for j in items:
-    lb.insert('', tk.END, values =(j[0], j[1]))
+    lb.insert('', tk.END, values =(j[0], j[1], j[2]))
 
 lb.place(x=10, y=280, width = 600, height=150)
 
