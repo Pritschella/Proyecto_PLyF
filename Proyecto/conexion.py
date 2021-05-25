@@ -19,7 +19,7 @@ class DataBase:
         print("Conexion exitosa")
         
     def select_one(self, numEmpleado):
-        sql = "SELECT emp_no, birth_date FROM employees WHERE emp_no = '{}'".format(numEmpleado)
+        sql = "SELECT * FROM employees WHERE emp_no = '{}'".format(numEmpleado)
         try:
             self.cursor.execute(sql)
             empleado = self.cursor.fetchone()
@@ -53,4 +53,4 @@ class DataBase:
         except Exception as e:
             raise e
 
-database=DataBase()
+#database=DataBase()

@@ -92,9 +92,26 @@ for j in items:
 lb.place(x=10, y=280, width = 600, height=150)
 
 def sacar():
-    seleccionado = lb.curselection()[0]
-    print(lb.item(seleccionado, option="text"))
-    
+    try:
+        seleccionado = lb.curselection()[0]
+        numEmpleado = lb.item(seleccionado, option="text")
+        cargar(numEmpleado)
+    except Exception as e:
+        MB.showerror("Error", "Seleccione un registro de la tabla")
+
+def actualizarLB(lb):
+    return lb
+
+
+def cargar(numEmpleado):
+    limpiar()
+    lista = con.DataBase().select_one(numEmpleado)
+    numEmpleadoCaja.insert(0, lista[0])
+    fNacimientoCaja.insert(0, lista[1])
+    nombreCaja.insert(0, lista[2])
+    apellidoCaja.insert(0, lista[3])
+    generoCaja.insert(0, lista[4])
+    fContratacionCaja.insert(0, lista[5])
 
 #Variables
 strNumEmpleado = tk.StringVar()
