@@ -23,7 +23,7 @@ def export_to_pdf():
 
     text=c.beginText(10,810,None)
     text.setFont("Times-Roman",12)
-    text.textLine("Employees- Reporte empleados nacidos en ela;o 1960")
+    text.textLine("Employees- Reporte empleados nacidos en el anio 1960")
     c.drawText(text)
     w,h = A4
     max_rows_per_page = 40
