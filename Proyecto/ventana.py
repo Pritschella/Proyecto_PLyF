@@ -155,7 +155,7 @@ def obtenerDatosA():
     elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
         MB.showerror("Error", "Numero de empleado y salario deben llevar solo NUMEROS")
     else:
-        realizarAlta(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get(), strSalario.get(), strNomDepartamento.get())
+        realizarAlta(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get())
         MB.showinfo("Exito", "Alta/Cambio Realizado")
         actualizarT()
 
@@ -233,8 +233,8 @@ def realizarCambio(EN, BD, FN, LN,G,HD, S,D):
     MB.showinfo("Exito", "Cambio Realizado")
 
 
-def realizarAlta(EN,BD, FN, LN,G,HD, S,D):
-    con.DataBase().alta(EN, BD, FN, LN, G, HD, S, D)
+def realizarAlta(EN,BD, FN, LN,G,HD):
+    con.DataBase().alta(EN, BD, FN, LN, G, HD)
     MB.showinfo("Exito", "Alta Realizada")
 #----------------
 ventana.mainloop()
