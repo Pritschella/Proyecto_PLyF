@@ -90,7 +90,7 @@ btnObtener=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnObtener.place(x=400, y=195)
 icopdf = PhotoImage(file='pdf.png')
 btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=30, command=lambda: reportes())
-btnPDF.place(x=450, y=80)
+btnPDF.place(x=650, y=120)
 
 #Listbox
 lb = ttk.Treeview(ventana, columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')
@@ -213,6 +213,7 @@ def obtenerNumEmpleado():
     if strNumEmpleado.get():
         con.DataBase().baja(strNumEmpleado.get())
         actualizarT()
+        limpiar()
         MB.showinfo("Exito", "Baja Realizada")
     else:
         MB.showerror("Error", "Introduce un Numero de Empleado")
