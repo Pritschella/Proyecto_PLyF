@@ -17,16 +17,16 @@ ventana.geometry("1000x600")
 ventana.configure(bg="azure")
 
 #menu bar
-menubar = Menu(ventana, font=("Monsterrant",16))
-ventana.config(menu=menubar)
-reportes = Menu(menubar, tearoff=0)
-reportes.add_command(label="Generar Reportes")
-menubar.add_cascade(label="Reportes", menu=reportes,command=reportes)
+#menubar = Menu(ventana, font=("Monsterrant",16))
+#ventana.config(menu=menubar)
+#reportes = Menu(menubar, tearoff=0)
+#reportes.add_command(label="Generar Reportes")
+#menubar.add_cascade(label="Reportes", menu=reportes,command=reportes)
 
 
 def reportes():
     print("Generando reporte")
-    Reporte.export_to_pdf("Prueba.pdf")
+    Reporte.export_to_pdf()
 
 
 #Titulos
@@ -88,6 +88,9 @@ btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar(
 btnLimpiar.place(x=400, y=165)
 btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnLimpiar.place(x=400, y=195)
+icopdf = PhotoImage(file='pdf.png')
+btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=30, command=lambda: reportes())
+btnPDF.place(x=450, y=80)
 
 #Listbox
 lb = ttk.Treeview(ventana, columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')

@@ -3,7 +3,7 @@ from random import randint
 import webbrowser as wb
 from reportlab.pdfgen.canvas import *
 from statistics import mean
-from reportlab.lib.pagesizes import *
+from reportlab.lib.pagesizes import A4
 from reportlab.lib.fonts import *
 import conexion as con
 from reportlab.pdfgen import canvas
@@ -13,12 +13,13 @@ def grouper(iterable,n):
     return itertools.zip_longest(*args)
 
 def export_to_pdf():
-    print()
-    registros = con.DataBase().select_empleadosBD("1960")
+    
     data = [("emp_no", "birth_date","first_name", "last_name", "gender", "hire_date")]
+    registros = con.DataBase().select_empleadosBD("1960")
+    
     for row in registros:
-        data.append(str(row[0]),str(row[1]),str(row[2]),str(row[3]),str(row[4]),str(row[5]))
-    c = canvas.Canvas("reportes/empleados.pdf", page_size=A4)
+        data.append((str(row[0]),str(row[1]),str(row[2]),str(row[3]),str(row[4]),str(row[5])))
+    c = canvas.Canvas("Reportes/empleados.pdf", pagesize=A4)
 
     text=c.beginText(10,810,None)
     text.setFont("Times-Roman",12)
@@ -32,7 +33,7 @@ def export_to_pdf():
     
     padding=15
     
-    xlist = [x+ x_offset for x in [0,200,250,300,350,400,480]]
+    xlist = [x+ x_offset for x in [0,60,200,250,300,350,400,480]]
     ylist = [h - y_offset - i*padding for i in range(max_rows_per_page + 1)]
 
     for rows in grouper(data, max_rows_per_page):
@@ -45,8 +46,8 @@ def export_to_pdf():
 
     c.save()
     
+    #wb.open_new("www.google.com")
+    wb.open_new("C:\\Users\\prits\\git\\repository\\Proyecto_PLyF\\Reportes\\empleados.pdf")
     
-    wb.open('C:/Users/prits/git/repository/Proyecto_PLyF/Proyecto/empleados.pdf')
     
-    
-    
+#export_to_pdf()
