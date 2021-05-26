@@ -86,8 +86,8 @@ btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: 
 btnCambio.place(x=400, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=400, y=165)
-btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
-btnLimpiar.place(x=400, y=195)
+btnObtener=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
+btnObtener.place(x=400, y=195)
 icopdf = PhotoImage(file='pdf.png')
 btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=30, command=lambda: reportes())
 btnPDF.place(x=450, y=80)
@@ -108,8 +108,10 @@ lb.place(x=10, y=280, width = 900, height=150)
 
 def sacar():
     try:
-        seleccionado = lb.curselection()[0]
-        numEmpleado = lb.item(seleccionado, option="text")
+        seleccionado = lb.selection()[0]
+        print(seleccionado)
+        numEmpleado = lb.item(seleccionado, option='values') 
+        print(numEmpleado)
         cargar(numEmpleado)
     except Exception as e:
         MB.showerror("Error", "Seleccione un registro de la tabla")
@@ -120,13 +122,14 @@ def actualizarLB(lb):
 
 def cargar(numEmpleado):
     limpiar()
-    lista = con.DataBase().select_one(numEmpleado)
-    numEmpleadoCaja.insert(0, lista[0])
-    fNacimientoCaja.insert(0, lista[1])
-    nombreCaja.insert(0, lista[2])
-    apellidoCaja.insert(0, lista[3])
-    generoCaja.insert(0, lista[4])
-    fContratacionCaja.insert(0, lista[5])
+    #lista = con.DataBase().select_one(numEmpleado)
+    print(numEmpleado[0])
+    numEmpleadoCaja.insert(0, numEmpleado[0])
+    fNacimientoCaja.insert(0, numEmpleado[1])
+    nombreCaja.insert(0, numEmpleado[2])
+    apellidoCaja.insert(0, numEmpleado[3])
+    generoCaja.insert(0, numEmpleado[4])
+    fContratacionCaja.insert(0, numEmpleado[5])
 
 #Variables
 strNumEmpleado = tk.StringVar()

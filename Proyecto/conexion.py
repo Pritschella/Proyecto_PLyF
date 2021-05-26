@@ -76,7 +76,7 @@ class DataBase:
         return usuario
     
     def actualizar(self,EN,BD,FN, LN, G, HD):
-        sql="Update employees set birth_date = '%s', first_name='%s', last_name='%s', gender='%s', hire_date='%s' where emp_no='%d'"%(BD, FN,LN,G,HD,EN)
+        sql="Update employees set birth_date = '%s', first_name='%s', last_name='%s', gender='%s', hire_date='%s' where emp_no='%s'"%(BD, FN,LN,G,HD,EN)
         try:
             self.cursor.execute()
             self.connection.commit()
@@ -85,9 +85,9 @@ class DataBase:
         
         
     def baja(self, numEmpleado):
-        sql = "Delete from employees where emp_no = '%d'"%(numEmpleado,)
-        sql2 = "Delete from dept_emp where emp_no = '%d'"%(numEmpleado,)
-        sql3 = "Delete from departments where emp_no = '%d'"%(numEmpleado,)
+        sql = "Delete from employees where emp_no = '%s'"%(numEmpleado,)
+        #sql2 = "Delete from dept_emp where emp_no = '%d'"%(numEmpleado,)
+        #sql3 = "Delete from departments where emp_no = '%d'"%(numEmpleado,)
         try:
             #self.cursor.execute(sql2)
             #self.cursor.execute(sql3)
