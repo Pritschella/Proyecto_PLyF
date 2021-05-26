@@ -53,7 +53,8 @@ def obtenerDatos():
     elif not strUs.get().isalpha():
         MB.showerror("Error", "Usuario Solo Puede Llevar LETRAS")
     else:
-        lleno = con.DataBase().validarUsuario("bere", "bere")
+        lleno = con.DataBase().validarUsuario(strUs.get(), strCon.get())
+        
         if (lleno):
             abrirVentana()
         else:
