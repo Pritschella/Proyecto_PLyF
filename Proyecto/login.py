@@ -7,6 +7,7 @@ Created on 20 may. 2021
 import tkinter as tk
 from tkinter import messagebox as MB
 from tkinter import PhotoImage
+import conexion as con
 
 #Creacion login y configuracion
 login = tk.Tk()
@@ -47,13 +48,13 @@ strCon=tk.StringVar()
 def obtenerDatos():
     strUs.set(usCaja.get())
     strCon.set(conCaja.get())
-
     if not strUs.get() or not strCon.get():
         MB.showerror("Error", "Llena los campos")
     elif not strUs.get().isalpha():
         MB.showerror("Error", "Usuario Solo Puede Llevar LETRAS")
     else:
-        if strUs.get()=="a" and strCon.get()=="a":
+        lleno = con.DataBase().validarUsuario("bere", "bere")
+        if (lleno):
             abrirVentana()
         else:
             MB.showerror("Error", "Usuario o Contrasena Incorrectos")
