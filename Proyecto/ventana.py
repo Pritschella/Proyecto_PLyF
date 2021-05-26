@@ -166,27 +166,29 @@ def obtenerDatos():
         actualizarT()
     
 def actualizarT():
-    lb = ttk.Treeview(ventana,columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')
-    lb.heading("numEmpleado", text="Numero de empleado")
-    lb.column("numEmpleado", width=45)
-    lb.heading("fNacimiento", text="Fecha de nacimiento")
-    lb.column("fNacimiento", width=45)
-    lb.heading("name", text="Nombre")
-    lb.column("name", width=45)
-    lb.heading("last_name",text="Apellidos")
-    lb.column("last_name", width=45)
-    lb.heading("gender",text="Genero")
-    lb.column("gender", width=45)
-    lb.heading("hire_date",text="Contratacion")
-    lb.column("hire_date", width=45)
+    #lb = ttk.Treeview(ventana,columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')
+    #lb.heading("numEmpleado", text="Numero de empleado")
+    #lb.column("numEmpleado", width=45)
+    #lb.heading("fNacimiento", text="Fecha de nacimiento")
+    #lb.column("fNacimiento", width=45)
+    #lb.heading("name", text="Nombre")
+    #lb.column("name", width=45)
+    #lb.heading("last_name",text="Apellidos")
+    #lb.column("last_name", width=45)
+    #lb.heading("gender",text="Genero")
+    #lb.column("gender", width=45)
+    #lb.heading("hire_date",text="Contratacion")
+    #lb.column("hire_date", width=45)
+    lb.delete(*lb.get_children())
     items = con.DataBase().select_all()
     
     for j in items:
         lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
 
     lb.place(x=10, y=280, width = 600, height=150)
+    lb.selection_remove()
     return lb
-lb = actualizarT()
+#lb = actualizarT()
 
 def obtenerNumEmpleado():
     strNumEmpleado.set(numEmpleadoCaja.get())

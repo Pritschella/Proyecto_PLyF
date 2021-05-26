@@ -28,6 +28,16 @@ class DataBase:
             raise e
         return empleado
     
+    def select_empleadosBD(self, fecha):
+        sql = "SELECT * FROM employees WHERE birth_date like '%s'"%(fecha,)
+        try:
+            self.cursor.execute(sql)
+            empleado = self.cursor.fetchone()
+            
+        except Exception as e:
+            raise e
+        return empleado
+    
     def select_all(self):
         sql = 'SELECT * FROM employees'
         try:
@@ -37,12 +47,13 @@ class DataBase:
         except Exception as e:
             raise e
         return empleado
+    
     def alta(self, EN, BD, FN, LN, G, HD, S, D):
         fecha = HD.substringData(0-3)
         print(fecha)
         fecha2=fecha+1
         strfecha= fecha2+""+HD.substringData(4-9)
-        sql = "Insert into employees (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES ('%d','%s','%s','%s','%s','%s') And Insert"%(EN, BD, FN, LN, G, HD,)
+        sql = "Insert into employees (emp_no, birth_date, first_name, last_name, gender, hire_date) VALUES ('%d','%s','%s','%s','%s','%s')"%(EN, BD, FN, LN, G, HD,)
         
         sql2="Insert into dept_emp values('%d', '%s')"%(EN, strfecha)
         try:

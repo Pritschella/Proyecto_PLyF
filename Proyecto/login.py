@@ -17,25 +17,26 @@ login.configure(bg="SkyBlue")
 #Titulo
 titulo = tk.Label(login, text="SISTEMA DE EMPLEADOS", bg="SkyBlue", font=("Helvetica", 16))
 titulo.pack(fill=tk.X)
+imagen = PhotoImage(file="login.png")
+img = tk.Label(login, imag = imagen).place(x=130, y=50)
 etiqueta=tk.Label(login, text="Llena los siguientes campos...", bg = "SkyBlue", font=("Arial", 12))
-etiqueta.pack()
+etiqueta.place(x=50, y=100)
 
 #etiquetas
 usLabel = tk.Label(login, text="Usuario", bg = "SkyBlue")
-usLabel.place(x=20, y=80)
+usLabel.place(x=20, y=140)
 conLabel = tk.Label(login, text="Password", bg="SkyBlue")
 conLabel.place(x=20, y=180)
 
 #cajas
 usCaja = tk.Entry(login)
-usCaja.place(x=100, y=80)
+usCaja.place(x=100, y=140)
 conCaja = tk.Entry(login, show="*")
 conCaja.place(x=100, y =180)
 
 #boton
-img = PhotoImage(file="login.png")
-btnIniciar = tk.Button(login, image=img, text="Iniciar", width=60, command=lambda: obtenerDatos())
-btnIniciar.place(x=130, y=250)
+btnIniciar = tk.Button(login, text="Iniciar", width=20, command=lambda: obtenerDatos())
+btnIniciar.place(x=90, y=250)
 
 
 #vars
