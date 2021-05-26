@@ -78,7 +78,7 @@ class DataBase:
     def actualizar(self,EN,BD,FN, LN, G, HD):
         sql="Update employees set birth_date = '%s', first_name='%s', last_name='%s', gender='%s', hire_date='%s' where emp_no='%s'"%(BD, FN,LN,G,HD,EN)
         try:
-            self.cursor.execute()
+            self.cursor.execute(sql)
             self.connection.commit()
         except Exception as e:
             raise e

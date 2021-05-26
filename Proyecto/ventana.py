@@ -179,7 +179,7 @@ def obtenerDatos():
     elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
         MB.showerror("Error", "Numero de empleado y salario deben llevar solo NUMEROS")
     else:
-        realizarCambio(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get(), strSalario.get(), strNomDepartamento.get())
+        realizarCambio(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get())
         MB.showinfo("Exito", "Alta/Cambio Realizado")
         actualizarT()
     
@@ -231,7 +231,7 @@ def limpiar():
     salarioCaja.delete(0, tk.END)
     nomDepartamentoCaja.set("")  
 
-def realizarCambio(EN, BD, FN, LN,G,HD, S,D):
+def realizarCambio(EN, BD, FN, LN,G,HD):
     con.DataBase().actualizar(EN, BD, FN, LN, G, HD)
     MB.showinfo("Exito", "Cambio Realizado")
 
