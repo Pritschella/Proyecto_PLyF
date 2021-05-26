@@ -29,11 +29,14 @@ class DataBase:
         return empleado
     
     def select_empleadosBD(self, fecha):
+        print("aqui esta la prueba")
         sql = "SELECT * FROM employees WHERE birth_date like '%s'"%(fecha,)
+        print("aqui esta la prueba")
         try:
+            print("aqui esta la prueba")
             self.cursor.execute(sql)
             empleado = self.cursor.fetchone()
-            
+            print (empleado)
         except Exception as e:
             raise e
         return empleado

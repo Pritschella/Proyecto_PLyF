@@ -5,17 +5,29 @@ Created on 24 may. 2021
 '''
 
 import tkinter as tk
-from tkinter import messagebox as MB
+from tkinter import messagebox as MB, Menu
 from tkinter import ttk
 from tkinter import PhotoImage
 import conexion as con
-
-
+import Reporte
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
 ventana.title("Menu de Sistema de EMPLEADOS")
 ventana.geometry("1000x600")
 ventana.configure(bg="azure")
+
+#menu bar
+menubar = Menu(ventana, font=("Monsterrant",16))
+ventana.config(menu=menubar)
+reportes = Menu(menubar, tearoff=0)
+reportes.add_command(label="Generar Reportes")
+menubar.add_cascade(label="Reportes", menu=reportes,command=reportes)
+
+
+def reportes():
+    print("Generando reporte")
+    Reporte.export_to_pdf("Prueba.pdf")
+
 
 #Titulos
 titulo = tk.Label(ventana, text="Sistema de EMPLEADOS", bg = "azure", font=("Helvetica", 16))
@@ -89,7 +101,7 @@ items = con.DataBase().select_all()
 for j in items:
     lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
 
-lb.place(x=10, y=280, width = 600, height=150)
+lb.place(x=10, y=280, width = 900, height=150)
 
 def sacar():
     try:
@@ -185,7 +197,7 @@ def actualizarT():
     for j in items:
         lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
 
-    lb.place(x=10, y=280, width = 600, height=150)
+    lb.place(x=10, y=280, width = 900, height=150)
     lb.selection_remove()
     return lb
 #lb = actualizarT()
