@@ -13,6 +13,8 @@ import Reporte
 from datetime import timedelta, date
 from datetime import datetime
 from plistlib import _date_to_string
+from gc import disable
+from tkinter.constants import NORMAL
 
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
@@ -60,7 +62,7 @@ nomDepartamentoLabel.place(x=30, y=235)
 
 
 #Cajas
-numEmpleadoCaja = tk.Entry(ventana, state="readonly")
+numEmpleadoCaja = tk.Entry(ventana, state="normal")
 numEmpleadoCaja.place(x=250, y=60)
 fNacimientoCaja = tk.Entry(ventana)
 fNacimientoCaja.place(x=250, y=85)
@@ -125,20 +127,18 @@ def actualizarLB(lb):
     return lb
 
 def onReturn(event):
-    print(busquedacaja.get())
     items =con.DataBase().buscar(busquedacaja.get())
-    
+    lb.delete(*lb.get_children())
     for j in items:
-        print(items)
-        print(j)
         lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
 
     lb.place(x=10, y=280, width = 900, height=150)
+    lb.selection_remove()
     return lb
     
 busquedacaja = ttk.Entry(ventana)
 busquedacaja.bind('<Key>', onReturn)
-busquedacaja.place(x=400, y=210)
+busquedacaja.place(x=400, y=220)
 
 def cargar(numEmpleado):
     limpiar()
@@ -173,9 +173,9 @@ def obtenerDatosA():
     strSalario.set(salarioCaja.get())
     strNomDepartamento.set(nomDepartamentoCaja.get())
     
-    if not strNumEmpleado.get() or not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
+    if not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
         MB.showerror("Error", "Faltan Datos por llenar")
-    elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
+    elif not strSalario.get().isdigit():
         MB.showerror("Error", "salario debe llevar solo NUMEROS")
         
     elif strNombre.get().isdigit() or strApellido.get().isdigit():
@@ -205,9 +205,9 @@ def obtenerDatos():
     strSalario.set(salarioCaja.get())
     strNomDepartamento.set(nomDepartamentoCaja.get())
     
-    if not strNumEmpleado.get() or not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
+    if not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
         MB.showerror("Error", "Faltan Datos por llenar")
-    elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
+    elif not strSalario.get().isdigit():
         MB.showerror("Error", "salario debe llevar solo NUMEROS")
         
     elif strNombre.get().isdigit() or strApellido.get().isdigit():
