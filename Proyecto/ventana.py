@@ -10,6 +10,10 @@ from tkinter import ttk
 from tkinter import PhotoImage
 import conexion as con
 import Reporte
+from datetime import timedelta, date
+from datetime import datetime
+from plistlib import _date_to_string
+
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
 ventana.title("Menu de Sistema de EMPLEADOS")
@@ -56,7 +60,7 @@ nomDepartamentoLabel.place(x=30, y=235)
 
 
 #Cajas
-numEmpleadoCaja = tk.Entry(ventana)
+numEmpleadoCaja = tk.Entry(ventana, state="readonly")
 numEmpleadoCaja.place(x=250, y=60)
 fNacimientoCaja = tk.Entry(ventana)
 fNacimientoCaja.place(x=250, y=85)
@@ -75,6 +79,7 @@ nomDepartamentoCaja = ttk.Combobox(ventana, state="readonly", width=17)
 nomDepartamentoCaja["values"] = ["Customer Service", "Development", "Finance", "Human Resources",
                                  "Marketing", "Production", "Quality Management", "Research", "Sales"]
 nomDepartamentoCaja.place(x=250, y=235)
+
 
 
 #botones
@@ -119,6 +124,21 @@ def sacar():
 def actualizarLB(lb):
     return lb
 
+def onReturn(event):
+    print(busquedacaja.get())
+    items =con.DataBase().buscar(busquedacaja.get())
+    
+    for j in items:
+        print(items)
+        print(j)
+        lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
+
+    lb.place(x=10, y=280, width = 900, height=150)
+    return lb
+    
+busquedacaja = ttk.Entry(ventana)
+busquedacaja.bind('<Key>', onReturn)
+busquedacaja.place(x=400, y=210)
 
 def cargar(numEmpleado):
     limpiar()
@@ -156,13 +176,24 @@ def obtenerDatosA():
     if not strNumEmpleado.get() or not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
         MB.showerror("Error", "Faltan Datos por llenar")
     elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
-        MB.showerror("Error", "Numero de empleado y salario deben llevar solo NUMEROS")
+        MB.showerror("Error", "salario debe llevar solo NUMEROS")
+        
+    elif strNombre.get().isdigit() or strApellido.get().isdigit():
+        MB.showerror("Error", "Nombre y/o apellidos deben llevar solo LETRAS")
+        
     else:
-        realizarAlta(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get())
-        MB.showinfo("Exito", "Alta/Cambio Realizado")
-        actualizarT()
-
-    
+        try:
+            fechaC = strFContratacion.get()
+            fechaN = strFNacimiento.get()
+            datetime.strptime(fechaC, '%Y-%m-%d')
+            datetime.strptime(fechaN, '%Y-%m-%d')
+            
+            
+            realizarAlta(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get(), strSalario.get(), strNomDepartamento.get())
+            MB.showinfo("Exito", "Alta Realizado")
+            actualizarT()
+        except ValueError:
+            MB.showerror("Error", "Formato erroneo de fecha de nacimiento o fecha de contratacion")
 
 def obtenerDatos():
     strNumEmpleado.set(numEmpleadoCaja.get())
@@ -177,11 +208,23 @@ def obtenerDatos():
     if not strNumEmpleado.get() or not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
         MB.showerror("Error", "Faltan Datos por llenar")
     elif not strNumEmpleado.get().isdigit() or not strSalario.get().isdigit():
-        MB.showerror("Error", "Numero de empleado y salario deben llevar solo NUMEROS")
+        MB.showerror("Error", "salario debe llevar solo NUMEROS")
+        
+    elif strNombre.get().isdigit() or strApellido.get().isdigit():
+        MB.showerror("Error", "Nombre y/o apellidos deben llevar solo LETRAS")
+        
     else:
-        realizarCambio(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get())
-        MB.showinfo("Exito", "Alta/Cambio Realizado")
-        actualizarT()
+        try:
+            fechaC = strFContratacion.get()
+            fechaN = strFNacimiento.get()
+            datetime.strptime(fechaC, '%Y-%m-%d')
+            datetime.strptime(fechaN, '%Y-%m-%d')
+            realizarCambio(strNumEmpleado.get(), strFNacimiento.get(), strNombre.get(), strApellido.get(), strGenero.get(), strFContratacion.get(), strSalario.get(), strNomDepartamento.get())
+            MB.showinfo("Exito", "Cambio Realizado")
+            actualizarT()
+        except ValueError:
+            MB.showerror("Error", "Formato erroneo de fecha de nacimiento o fecha de contratacion ")
+        
     
 def actualizarT():
     #lb = ttk.Treeview(ventana,columns=("numEmpleado","fNacimiento", "name", "last_name","gender","hire_date"), show='headings')
@@ -232,13 +275,30 @@ def limpiar():
     salarioCaja.delete(0, tk.END)
     nomDepartamentoCaja.set("")  
 
-def realizarCambio(EN, BD, FN, LN,G,HD):
+def realizarCambio(EN, BD, FN, LN,G,HD, S, D):
+    ultimoEN = con.DataBase().ultimoEN()
+    #f = HD.date ()
+    #fechato = f.year() +1
+    #DN = con.DataBase().select_depa(D)
+    #con.DataBase().insert_salary(EN, S, HD, _date_to_string( fechato))
+    #con.DataBase().insert_dept(EN, DN, HD, _date_to_string( fechato))
     con.DataBase().actualizar(EN, BD, FN, LN, G, HD)
     MB.showinfo("Exito", "Cambio Realizado")
+    limpiar()
 
-
-def realizarAlta(EN,BD, FN, LN,G,HD):
-    con.DataBase().alta(EN, BD, FN, LN, G, HD)
-    MB.showinfo("Exito", "Alta Realizada")
+def realizarAlta(EN,BD, FN, LN,G,HD, S, D):
+    altas = con.DataBase().select_one(EN)
+    ultimoEN = con.DataBase().ultimoEN()
+    #print("HD " +HD)
+    #fechato =  HD +1
+    #print(fechato)
+    #DN = con.DataBase().select_depa(D)
+    if(altas):
+        MB.showinfo("Error", "El numero de empleado ya existe")
+    else:
+        #con.DataBase().insert_salary(EN, S, HD, _date_to_string( fechato))
+        #con.DataBase().insert_dept(EN, DN, HD, _date_to_string( fechato))
+        con.DataBase().alta(ultimoEN[0]+1, BD, FN, LN, G, HD)
+        limpiar()
 #----------------
 ventana.mainloop()

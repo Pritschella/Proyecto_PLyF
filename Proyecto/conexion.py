@@ -15,14 +15,29 @@ class DataBase:
             db="employees")
         
         self.cursor = self.connection.cursor()
-        
-        print("Conexion exitosa")
     
+    def buscar(self, Busqueda):
+        sql ="Select * from employees where first_name like '%"+Busqueda+"%' OR last_name like '%"+Busqueda+"%'" 
+        try:
+            self.cursor.execute(sql)
+            empleado = self.cursor.fetchall()
+        except Exception as e:
+            raise e
+        return empleado   
     
+    def ultimoEN(self):
+        sql = "SELECT MAX(emp_no) AS emp_no FROM employees"
+        try:
+            self.cursor.execute(sql)
+            empleado = self.cursor.fetchone()
+            
+        except Exception as e:
+            raise e
+        return empleado
     
         
     def select_one(self, numEmpleado):
-        sql = "SELECT * FROM employees WHERE emp_no = '%d'"%(numEmpleado,)
+        sql = "SELECT * FROM employees WHERE emp_no = '%s'"%(numEmpleado,)
         try:
             self.cursor.execute(sql)
             empleado = self.cursor.fetchone()
@@ -83,7 +98,46 @@ class DataBase:
         except Exception as e:
             raise e
         
+    def select_depa(self, ndepa):
+        sql = "select * from departments where dept_name = '%s'"%(ndepa)
+        try: 
+            self.cursor.execute(sql)
+            depa = self.cursor.fetchone()
+        except Exception as e:
+            raise e
         
+    def update_dept(self, EN, DN, FD, TD):
+        sql = "Update dept_emp dept_no='%s', from_date='%s', to_date='%s' where emp_no='%s'"%(EN , DN, FD, TD)
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as e:
+            raise e
+    
+    def update_salary(self, EN, S, FD, TD):
+        sql = "update salaries salary='%s', from_date='%s', to_date='%s' where emp_no='%s'"%(EN, S, FD, TD)
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as e:
+            raise e
+        
+    def insert_dept(self, EN, DN, FD, TD):
+        sql = "INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date) values ('%s', '%s', '%s', '%s')"%(EN , DN, FD, TD)
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as e:
+            raise e
+    
+    def insert_salary(self, EN, S, FD, TD):
+        sql = "INSERT INTO salaries (emp_no, salary, from_date, to_date) values('%s','%s', '%s','%s')"%(EN, S, FD, TD)
+        try:
+            self.cursor.execute(sql)
+            self.connection.commit()
+        except Exception as e:
+            raise e
+                
     def baja(self, numEmpleado):
         sql = "Delete from employees where emp_no = '%s'"%(numEmpleado,)
         #sql2 = "Delete from dept_emp where emp_no = '%d'"%(numEmpleado,)
@@ -95,5 +149,7 @@ class DataBase:
             self.connection.commit()
         except Exception as e:
             raise e
-
+#fecha = "1990-12-12"
+#fechacam = fecha.substring(0-3)
+#print(fechacam)
 #database=DataBase()
