@@ -110,6 +110,8 @@ lb.heading("hire_date",text="Contratacion")
 items = con.DataBase().select_all()
 for j in items:
     lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
+    if j == 50:
+        break
 
 lb.place(x=10, y=280, width = 900, height=150)
 
@@ -127,14 +129,17 @@ def actualizarLB(lb):
     return lb
 
 def onReturn(event):
-    items =con.DataBase().buscar(busquedacaja.get())
-    lb.delete(*lb.get_children())
-    for j in items:
-        lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
+    if(con.DataBase().buscardept(busquedacaja.get())):
+        items =con.DataBase().buscardept(busquedacaja.get())
+        print(items)
+        lb.delete(*lb.get_children())
+        for j  in items :
+            lb.insert('', tk.END, values =(j[0], j[1], j[2],j[3],j[4],j[5]))
+        
 
-    lb.place(x=10, y=280, width = 900, height=150)
-    lb.selection_remove()
-    return lb
+        lb.place(x=10, y=280, width = 900, height=150)
+        lb.selection_remove()
+        return lb
     
 busquedacaja = ttk.Entry(ventana)
 busquedacaja.bind('<Key>', onReturn)
@@ -148,6 +153,7 @@ def cargar(numEmpleado):
     fNacimientoCaja.insert(0, numEmpleado[1])
     nombreCaja.insert(0, numEmpleado[2])
     apellidoCaja.insert(0, numEmpleado[3])
+    #generoCaja(0, numEmpleado[4])
     generoCaja.insert(0, numEmpleado[4])
     fContratacionCaja.insert(0, numEmpleado[5])
 
@@ -173,13 +179,35 @@ def obtenerDatosA():
     strSalario.set(salarioCaja.get())
     strNomDepartamento.set(nomDepartamentoCaja.get())
     
-    if not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
-        MB.showerror("Error", "Faltan Datos por llenar")
-    elif not strSalario.get().isdigit():
-        MB.showerror("Error", "salario debe llevar solo NUMEROS")
+    #if not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
+     #   MB.showerror("Error", "Faltan Datos por llenar")
+    #elif not strSalario.get().isdigit():
+     #   MB.showerror("Error", "salario debe llevar solo NUMEROS")
         
-    elif strNombre.get().isdigit() or strApellido.get().isdigit():
-        MB.showerror("Error", "Nombre y/o apellidos deben llevar solo LETRAS")
+    #elif strNombre.get().isdigit() or strApellido.get().isdigit():
+     #   MB.showerror("Error", "Nombre y/o apellidos deben llevar solo LETRAS")
+     
+    if not strFNacimiento.get():
+        MB.showerror("Error", "Ingrese la fecha de nacimiento")
+    elif not strNombre.get():
+        MB.showerror("Error", "Ingrese un Nombre")
+    elif strNombre.get().isdigit():
+        MB.showerror("Error", "El nombre debe llevar solo LETRAS")
+    elif not strApellido.get():
+        MB.showerror("Error", "Ingrese un Apellido")
+    elif strApellido.get().isdigit():
+        MB.showerror("Error", "El Apellido debe llevar solo LETRAS")
+    elif not strGenero.get():
+        MB.showerror("Error", "Falta seleccionar genero")
+    elif not strFContratacion.get():
+        MB.showerror("Error", "Ingrese la fecha de contratacion")
+    elif not strSalario.get():
+        MB.showerror("Error", "Ingrese el salario")
+    elif not strSalario.get().isdigit():
+        MB.showerror("Error", "El salario debe llever solo NUMEROS")   
+    elif not strNomDepartamento.get():
+        MB.showerror("Error", "Seleccione Nombre de Departamento")
+     
         
     else:
         try:
@@ -193,7 +221,7 @@ def obtenerDatosA():
             MB.showinfo("Exito", "Alta Realizado")
             actualizarT()
         except ValueError:
-            MB.showerror("Error", "Formato erroneo de fecha de nacimiento o fecha de contratacion")
+            MB.showerror("Error", "Formato erroneo de fecha de nacimiento o fecha de contratacion debe ser YYYY-MM-DD")
 
 def obtenerDatos():
     strNumEmpleado.set(numEmpleadoCaja.get())
@@ -205,13 +233,36 @@ def obtenerDatos():
     strSalario.set(salarioCaja.get())
     strNomDepartamento.set(nomDepartamentoCaja.get())
     
-    if not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
-        MB.showerror("Error", "Faltan Datos por llenar")
+    if not strFNacimiento.get():
+        MB.showerror("Error", "Ingrese la fecha de nacimiento")
+    elif not strNombre.get():
+        MB.showerror("Error", "Ingrese un Nombre")
+    elif strNombre.get().isdigit():
+        MB.showerror("Error", "El nombre debe llevar solo LETRAS")
+    elif not strApellido.get():
+        MB.showerror("Error", "Ingrese un Apellido")
+    elif strApellido.get().isdigit():
+        MB.showerror("Error", "El Apellido debe llevar solo LETRAS")
+    elif not strGenero.get():
+        MB.showerror("Error", "Falta seleccionar genero")
+    elif not strFContratacion.get():
+        MB.showerror("Error", "Ingrese la fecha de contratacion")
+    elif not strSalario.get():
+        MB.showerror("Error", "Ingrese el salario")
     elif not strSalario.get().isdigit():
-        MB.showerror("Error", "salario debe llevar solo NUMEROS")
+        MB.showerror("Error", "El salario debe llever solo NUMEROS")   
+    elif not strNomDepartamento.get():
+        MB.showerror("Error", "Seleccione Nombre de Departamento")
         
-    elif strNombre.get().isdigit() or strApellido.get().isdigit():
-        MB.showerror("Error", "Nombre y/o apellidos deben llevar solo LETRAS")
+
+    
+    #if not strFNacimiento.get() or not strNombre.get() or not strApellido.get() or not strGenero.get() or not strFContratacion.get() or not strSalario.get() or not strNomDepartamento.get():
+        #MB.showerror("Error", "Faltan Datos por llenar")
+    #elif not strSalario.get().isdigit():
+        #MB.showerror("Error", "salario debe llevar solo NUMEROS")
+        
+    #elif strNombre.get().isdigit() or strApellido.get().isdigit():
+        #MB.showerror("Error", "Nombre y/o apellidos deben llevar solo LETRAS")
         
     else:
         try:
@@ -223,7 +274,7 @@ def obtenerDatos():
             MB.showinfo("Exito", "Cambio Realizado")
             actualizarT()
         except ValueError:
-            MB.showerror("Error", "Formato erroneo de fecha de nacimiento o fecha de contratacion ")
+            MB.showerror("Error", "Formato erroneo de fecha de nacimiento o fecha de contratacion el formato es YYYY-MM-DD")
         
     
 def actualizarT():

@@ -15,15 +15,32 @@ class DataBase:
             db="employees")
         
         self.cursor = self.connection.cursor()
+    def buscardept(self, busca):
+        if(DataBase().select_depa(busca)):
+            nd= DataBase().select_depa(busca)
+            print(nd[0])
+            sql ="Select * from employees as em inner join dept_emp as de where em.first_name like '%"+busca+"%' or em.last_name like '%"+busca+"%' or (em.emp_no = de.emp_no and de.dept_no = '"+nd[0]+"') LIMIT 50" 
+            try:
+                self.cursor.execute(sql)
+                empleado = self.cursor.fetchall()
+                if empleado == None:
+                    print("error")
+            
+            except Exception as e:
+                raise e
+            return empleado  
     
     def buscar(self, Busqueda):
-        sql ="Select * from employees where first_name like '%"+Busqueda+"%' OR last_name like '%"+Busqueda+"%'" 
-        try:
-            self.cursor.execute(sql)
-            empleado = self.cursor.fetchall()
-        except Exception as e:
-            raise e
-        return empleado   
+        if(DataBase().select_depa(Busqueda)):
+            nd= DataBase().select_depa(Busqueda)
+        
+            sql ="Select * from employees as emp inner join dept_emp as dep where emp.first_name like '%"+Busqueda+"%' OR emp.last_name like '%"+Busqueda+"%'" 
+            try:
+                self.cursor.execute(sql)
+                empleado = self.cursor.fetchall()
+            except Exception as e:
+                raise e
+            return empleado   
     
     def ultimoEN(self):
         sql = "SELECT MAX(emp_no) AS emp_no FROM employees"
@@ -34,7 +51,15 @@ class DataBase:
         except Exception as e:
             raise e
         return empleado
-    
+    def ne(self, nd):
+        sql="select emp_no from dept_emp where dept_no = '"+nd+"'"
+        try:
+            self.cursor.execute(sql)
+            nume = self.cursor.fetchall()
+            
+        except Exception as e:
+            raise e
+        return nume
         
     def select_one(self, numEmpleado):
         sql = "SELECT * FROM employees WHERE emp_no = '%s'"%(numEmpleado,)
@@ -57,7 +82,7 @@ class DataBase:
         return empleado
     
     def select_all(self):
-        sql = 'SELECT * FROM employees'
+        sql = 'SELECT * FROM employees LIMIT 50'
         try:
             self.cursor.execute(sql)
             empleado = self.cursor.fetchall()
@@ -99,13 +124,21 @@ class DataBase:
             raise e
         
     def select_depa(self, ndepa):
-        sql = "select * from departments where dept_name = '%s'"%(ndepa)
+        sql = "select * from departments where dept_name like '%"+ndepa+"%'"
         try: 
             self.cursor.execute(sql)
             depa = self.cursor.fetchone()
         except Exception as e:
             raise e
-        
+        return depa
+    def select_depa2(self, ndepa):
+        sql = "select * from departments where dept_name like '%"+ndepa+"%'"
+        try: 
+            self.cursor.execute(sql)
+            depa = self.cursor.fetchone()
+        except Exception as e:
+            raise e    
+        return depa
     def update_dept(self, EN, DN, FD, TD):
         sql = "Update dept_emp dept_no='%s', from_date='%s', to_date='%s' where emp_no='%s'"%(EN , DN, FD, TD)
         try:
@@ -149,6 +182,8 @@ class DataBase:
             self.connection.commit()
         except Exception as e:
             raise e
+
+#print(DataBase().buscardept("Deve"))
 #fecha = "1990-12-12"
 #fechacam = fecha.substring(0-3)
 #print(fechacam)
